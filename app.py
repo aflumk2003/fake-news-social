@@ -1,72 +1,17 @@
-import streamlit as st
+import os
+import urllib.request
 import pickle
-import re
 
-# ---------------------------
-# PAGE CONFIG
-# ---------------------------
-st.set_page_config(
-    page_title="Fake News Detection",
-    layout="centered"
-)
+MODEL_URL = "https://raw.githubusercontent.com/aflumk2003/fake-news-social/main/model.pkl"
+VECTORIZER_URL = "https://raw.githubusercontent.com/aflumk2003/fake-news-social/main/vectorizer.pkl"
 
-# ---------------------------
-# SHOW UI FIRST (🔥 IMPORTANT)
-# ---------------------------
-st.title("📰 Fake News Detection Using Social Media Text")
-st.write("AI-powered misinformation detection system")
+def download_file(url, filename):
+    if not os.path.exists(filename):
+        with open(filename, "wb") as f:
+            f.write(urllib.request.urlopen(url).read())
 
-st.markdown("---")
+download_file(MODEL_URL, "model.pkl")
+download_file(VECTORIZER_URL, "vectorizer.pkl")
 
-# ---------------------------
-# LOAD MODEL (AFTER UI)
-# ---------------------------
-@st.cache_resource
-def load_model():
-    model = pickle.load(open("model.pkl", "rb"))
-    vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
-    return model, vectorizer
-
-# Show loading message
-with st.spinner("Loading AI model..."):
-    try:
-        model, vectorizer = load_model()
-    except:
-        st.error("❌ Model files missing")
-        st.stop()
-
-# ---------------------------
-# CLEAN TEXT
-# ---------------------------
-def clean_text(text):
-    text = text.lower()
-    text = re.sub(r'\W', ' ', text)
-    text = re.sub(r'\s+', ' ', text)
-    return text
-
-# ---------------------------
-# INPUT
-# ---------------------------
-user_input = st.text_area("Enter text here")
-
-if st.button("Analyze"):
-    if user_input.strip() == "":
-        st.warning("Enter some text")
-    else:
-        cleaned = clean_text(user_input)
-
-        input_vec = vectorizer.transform([cleaned])
-
-        prediction = model.predict(input_vec)[0]
-        probability = model.predict_proba(input_vec)[0]
-
-        confidence = max(probability) * 100
-
-        if confidence < 55:
-            st.warning(f"🤔 Uncertain ({confidence:.2f}%)")
-        elif prediction == 1:
-            st.success(f"✅ Real News ({confidence:.2f}%)")
-        else:
-            st.error(f"🚨 Fake News ({confidence:.2f}%)")
-
-        st.progress(int(confidence))
+model = pickle.load(open("model.pkl", "rb"))
+vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
