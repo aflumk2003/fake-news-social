@@ -7,27 +7,19 @@ import re
 # ---------------------------
 st.set_page_config(
     page_title="Fake News Detection",
-    page_icon="🧠",
-    layout="wide"
+    layout="centered"
 )
 
 # ---------------------------
-# TITLE (SHOW IMMEDIATELY)
+# SHOW UI FIRST (🔥 IMPORTANT)
 # ---------------------------
-st.markdown(
-    "<h1 style='text-align:center; color:#00ffd5;'>📰 Fake News Detection Using Social Media Text</h1>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    "<p style='text-align:center;'>AI-powered misinformation detection</p>",
-    unsafe_allow_html=True
-)
+st.title("📰 Fake News Detection Using Social Media Text")
+st.write("AI-powered misinformation detection system")
 
 st.markdown("---")
 
 # ---------------------------
-# LOAD MODEL (CACHED 🔥)
+# LOAD MODEL (AFTER UI)
 # ---------------------------
 @st.cache_resource
 def load_model():
@@ -35,11 +27,13 @@ def load_model():
     vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
     return model, vectorizer
 
-try:
-    model, vectorizer = load_model()
-except:
-    st.error("❌ Model not found. Make sure model.pkl and vectorizer.pkl are in the folder.")
-    st.stop()
+# Show loading message
+with st.spinner("Loading AI model..."):
+    try:
+        model, vectorizer = load_model()
+    except:
+        st.error("❌ Model files missing")
+        st.stop()
 
 # ---------------------------
 # CLEAN TEXT
@@ -53,20 +47,11 @@ def clean_text(text):
 # ---------------------------
 # INPUT
 # ---------------------------
-st.markdown("### ✍️ Enter Text")
+user_input = st.text_area("Enter text here")
 
-user_input = st.text_area(
-    "",
-    placeholder="Paste tweet, WhatsApp forward, or news...",
-    height=150
-)
-
-# ---------------------------
-# BUTTON
-# ---------------------------
-if st.button("🔍 Analyze"):
+if st.button("Analyze"):
     if user_input.strip() == "":
-        st.warning("⚠️ Enter some text")
+        st.warning("Enter some text")
     else:
         cleaned = clean_text(user_input)
 
@@ -76,8 +61,6 @@ if st.button("🔍 Analyze"):
         probability = model.predict_proba(input_vec)[0]
 
         confidence = max(probability) * 100
-
-        st.markdown("---")
 
         if confidence < 55:
             st.warning(f"🤔 Uncertain ({confidence:.2f}%)")
