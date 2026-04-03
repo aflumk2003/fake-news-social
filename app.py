@@ -9,43 +9,37 @@ import urllib.request
 # ---------------------------
 st.set_page_config(page_title="Fake News Detection")
 
-# ---------------------------
-# SHOW UI FIRST (IMPORTANT)
-# ---------------------------
 st.title("📰 Fake News Detection Using Social Media Text")
 st.write("AI-powered misinformation detection")
 
 st.markdown("---")
 
 # ---------------------------
-# DOWNLOAD MODEL SAFELY
+# DOWNLOAD ONLY ONCE
 # ---------------------------
 MODEL_URL = "https://raw.githubusercontent.com/aflumk2003/fake-news-social/main/model.pkl"
 VECTORIZER_URL = "https://raw.githubusercontent.com/aflumk2003/fake-news-social/main/vectorizer.pkl"
 
-def safe_download(url, filename):
-    try:
-        if not os.path.exists(filename):
-            st.write(f"Downloading {filename}...")
+def download_once(url, filename):
+    if not os.path.exists(filename):
+        with st.spinner(f"Downloading {filename}..."):
             data = urllib.request.urlopen(url).read()
             with open(filename, "wb") as f:
                 f.write(data)
-    except Exception as e:
-        st.error(f"Download failed: {e}")
-        st.stop()
 
-safe_download(MODEL_URL, "model.pkl")
-safe_download(VECTORIZER_URL, "vectorizer.pkl")
+download_once(MODEL_URL, "model.pkl")
+download_once(VECTORIZER_URL, "vectorizer.pkl")
 
 # ---------------------------
-# LOAD MODEL SAFELY
+# CACHE MODEL (CRITICAL 🔥)
 # ---------------------------
-try:
+@st.cache_resource
+def load_model():
     model = pickle.load(open("model.pkl", "rb"))
     vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
-except Exception as e:
-    st.error(f"Model loading failed: {e}")
-    st.stop()
+    return model, vectorizer
+
+model, vectorizer = load_model()
 
 # ---------------------------
 # CLEAN TEXT
