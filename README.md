@@ -1,295 +1,186 @@
-<div align="center">
+# Fake News Detection Using Social Media Text
 
-```
-███████╗ █████╗ ██╗  ██╗███████╗    ███╗   ██╗███████╗██╗    ██╗███████╗
-██╔════╝██╔══██╗██║ ██╔╝██╔════╝    ████╗  ██║██╔════╝██║    ██║██╔════╝
-█████╗  ███████║█████╔╝ █████╗      ██╔██╗ ██║█████╗  ██║ █╗ ██║███████╗
-██╔══╝  ██╔══██║██╔═██╗ ██╔══╝      ██║╚██╗██║██╔══╝  ██║███╗██║╚════██║
-██║     ██║  ██║██║  ██╗███████╗    ██║ ╚████║███████╗╚███╔███╔╝███████║
-╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝    ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝
-                                                                            
-██████╗ ███████╗████████╗███████╗ ██████╗████████╗ ██████╗ ██████╗         
-██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗        
-██║  ██║█████╗     ██║   █████╗  ██║        ██║   ██║   ██║██████╔╝        
-██║  ██║██╔══╝     ██║   ██╔══╝  ██║        ██║   ██║   ██║██╔══██╗        
-██████╔╝███████╗   ██║   ███████╗╚██████╗   ██║   ╚██████╔╝██║  ██║        
-╚═════╝ ╚══════╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝        
-```
-
-**AI-Powered Misinformation Intelligence System**
+> An AI-powered system that classifies social media content as **Real** or **Fake** using Machine Learning and NLP — with confidence scoring and uncertainty handling.
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Scikit-learn](https://img.shields.io/badge/scikit--learn-1.3-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io)
-[![Accuracy](https://img.shields.io/badge/Accuracy-98.7%25-00D26A?style=flat-square)](https://github.com)
+[![Accuracy](https://img.shields.io/badge/Accuracy-98.7%25-00D26A?style=flat-square)](#-model-details)
 [![License](https://img.shields.io/badge/License-MIT-blueviolet?style=flat-square)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
 
-*Classify news articles as Real or Fake in milliseconds using TF-IDF + Logistic Regression*
-
-[**🚀 Live Demo**](https://your-demo-link.streamlit.app) · [**📊 Dataset**](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset) · [**📖 Docs**](#-documentation) · [**🐛 Report Bug**](https://github.com/aflumk2003/issues) · [**✨ Request Feature**](https://github.com/aflumk2003/issues)
-
-</div>
+[**🚀 Live Demo**](https://your-demo-link.streamlit.app) · [**📊 Dataset**](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset) · [**🐛 Report Bug**](https://github.com/aflumk2003/issues)
 
 ---
 
-## ⚡ What Is This?
+## Overview
 
-> *In an era where a single viral post can shift public opinion within hours, the ability to instantly verify information is no longer a luxury — it's a necessity.*
-
-**Fake News Detector** is an ML-powered classification engine that analyzes the linguistic fingerprint of any news article or social media post and determines its credibility with a probabilistic confidence score.
+With the rapid spread of misinformation across Twitter, Facebook, and WhatsApp, verifying content at scale has become critical. This project uses a TF-IDF + Logistic Regression pipeline to analyze the linguistic patterns of social media text and output a credibility verdict in milliseconds.
 
 ```
-Input Text ──► Preprocessing ──► TF-IDF Vectorization ──► Logistic Regression ──► Verdict + Confidence
+Raw Text  →  Preprocessing  →  TF-IDF Vectorization  →  ML Classifier  →  Verdict + Confidence Score
 ```
+
+**Output classes:**
+
+| Label | Meaning | Trigger |
+|:------|:--------|:--------|
+| ✅ Real | Credible content | Confidence ≥ 65% (Real) |
+| 🚨 Fake | Misinformation detected | Confidence ≥ 65% (Fake) |
+| 🤔 Uncertain | Low-confidence prediction | Confidence < 65% either way |
 
 ---
 
-## 🖥️ Demo
+## Features
 
-<div align="center">
-
-| Input | Verdict | Confidence |
-|:------|:-------:|:----------:|
-| *"Scientists confirm water found on Mars..."* | ✅ **REAL** | 94.2% |
-| *"Government putting 5G chips in vaccines..."* | 🚨 **FAKE** | 97.8% |
-| *"New policy changes announced for..."* | 🤔 **UNCERTAIN** | 51.3% |
-
-</div>
-
-> 📸 Add screenshots of your running app here — visuals dramatically improve GitHub engagement.
+- **Text Classification** — Paste any tweet, post, or article and get an instant verdict
+- **Confidence Scoring** — Probabilistic Real vs Fake percentage breakdown
+- **Uncertainty Handling** — Low-confidence inputs are flagged rather than forced into a binary result
+- **Visual Dashboard** — Probability bar chart rendered live in Streamlit
+- **Fast Inference** — Sub-second predictions after model load
 
 ---
 
-## ✨ Features
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    CORE CAPABILITIES                         │
-├──────────────────────┬──────────────────────────────────────┤
-│  🔍 Text Analysis    │  Real-time classification of any     │
-│                      │  news article or social media post   │
-├──────────────────────┼──────────────────────────────────────┤
-│  📊 Confidence Score │  Probabilistic output with           │
-│                      │  Real vs Fake percentage breakdown   │
-├──────────────────────┼──────────────────────────────────────┤
-│  ⚠️  Uncertainty Mode │  Flags low-confidence predictions   │
-│                      │  instead of forcing a binary result  │
-├──────────────────────┼──────────────────────────────────────┤
-│  🎨 Modern UI        │  Clean, responsive Streamlit         │
-│                      │  interface with chart visualizations │
-└──────────────────────┴──────────────────────────────────────┘
-```
-
----
-
-## 🧠 Model Architecture
-
-```
-                        ╔══════════════════╗
-  Raw Text Input        ║   PREPROCESSING  ║
-  ─────────────► Text ──║ • Lowercasing    ║──►  Cleaned Text
-                        ║ • Noise Removal  ║
-                        ║ • Normalization  ║
-                        ╚══════════════════╝
-                                 │
-                                 ▼
-                        ╔══════════════════╗
-                        ║  TF-IDF ENGINE   ║
-                        ║                  ║
-                        ║ • Unigrams       ║──►  Feature Matrix
-                        ║ • Bigrams        ║     [n × vocab_size]
-                        ║ • Trigrams       ║
-                        ╚══════════════════╝
-                                 │
-                                 ▼
-                        ╔══════════════════╗
-                        ║ LOGISTIC REGR.   ║
-                        ║                  ║
-                        ║ P(Fake|X)  ──────║──►  🚨 FAKE  (>0.65)
-                        ║ P(Real|X)  ──────║──►  ✅ REAL  (<0.35)
-                        ║                  ║──►  🤔 UNCERTAIN
-                        ╚══════════════════╝
-```
+## Model Details
 
 | Parameter | Value |
 |:----------|:------|
 | Algorithm | Logistic Regression (L2 regularization) |
-| Vectorizer | TF-IDF with n-gram range (1, 3) |
+| Vectorizer | TF-IDF with n-gram range `(1, 3)` |
 | Max Features | 50,000 |
 | Confidence Threshold | 65% |
 | Training Accuracy | ~99.1% |
 | Validation Accuracy | ~98.7% |
 
+**Preprocessing steps:**
+1. Lowercase conversion
+2. URL, HTML tag, and special character removal
+3. Whitespace normalization
+
 ---
 
-## 📂 Project Structure
+## Dataset
+
+Trained on the [Kaggle Fake and Real News Dataset](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset):
+
+| File | Label | Articles |
+|:-----|:------|:--------:|
+| `True.csv` | Real News | 21,417 |
+| `Fake.csv` | Fake News | 23,481 |
+| — | **Total** | **44,898** |
+
+---
+
+## Project Structure
 
 ```
 fake-news-detector/
 │
-├── 📱 app.py                 # Streamlit web application
-├── 🏋️ train.py               # Model training pipeline
+├── app.py              # Streamlit web application
+├── train.py            # Model training script
+├── model.pkl           # Serialized trained model
+├── vectorizer.pkl      # Fitted TF-IDF vectorizer
 │
-├── 🧠 model.pkl              # Serialized trained model
-├── 🔤 vectorizer.pkl         # Fitted TF-IDF vectorizer
+├── dataset/
+│   ├── True.csv
+│   └── Fake.csv
 │
-├── 📊 dataset/
-│   ├── True.csv              # 21,417 verified real news articles
-│   └── Fake.csv              # 23,481 labeled fake news articles
-│
-├── 📋 requirements.txt       # Python dependencies
-└── 📖 README.md              # You are here
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## 📊 Dataset
+## Installation & Setup
 
-This project is trained on the **Kaggle Fake and Real News Dataset** — one of the most widely cited misinformation research datasets.
-
-| Split | Articles | Source |
-|:------|:--------:|:-------|
-| Real News | **21,417** | Reuters |
-| Fake News | **23,481** | PolitiFact / unreliable sites |
-| **Total** | **44,898** | Mixed |
-
-> 🔗 **Download:** [kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset)
-
----
-
-## ⚙️ Setup & Installation
-
-### Prerequisites
-
-```bash
-Python 3.9+  |  pip  |  Git
-```
-
-### 1 — Clone
+**1. Clone the repository**
 
 ```bash
 git clone https://github.com/aflumk2003/fake-news-detector.git
 cd fake-news-detector
 ```
 
-### 2 — Install Dependencies
+**2. Install dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3 — Prepare Dataset
+**3. Add the dataset**
 
-Download the Kaggle dataset and place in project root:
+Download from Kaggle and place `True.csv` and `Fake.csv` in the project root.
 
-```
-fake-news-detector/
-├── True.csv        ← place here
-├── Fake.csv        ← place here
-└── ...
-```
-
-### 4 — Train the Model
+**4. Train the model**
 
 ```bash
 python train.py
 ```
 
-> ⏱️ Training takes ~30–60 seconds on a standard laptop. Two files will be generated: `model.pkl` and `vectorizer.pkl`
+> Generates `model.pkl` and `vectorizer.pkl` — takes ~30–60 seconds.
 
-### 5 — Launch the App
+**5. Run the app**
 
 ```bash
 python -m streamlit run app.py
 ```
 
-Open your browser at **`http://localhost:8501`**
+Open `http://localhost:8501` in your browser.
 
 ---
 
-## 🧪 How It Works
+## How It Works
 
-```
-Step 1: INPUT
-  └─ User pastes a news article or social media text
+**Step 1 — Input**
+User pastes a social media post, tweet, or news snippet into the app.
 
-Step 2: PREPROCESSING
-  └─ Lowercase → strip HTML/URLs → remove punctuation → normalize whitespace
+**Step 2 — Preprocessing**
+Text is lowercased, URLs and special characters are stripped, and whitespace is normalized.
 
-Step 3: VECTORIZATION
-  └─ TF-IDF transforms text into a high-dimensional sparse feature vector
-     Each feature = weighted importance of a word/phrase in the corpus
+**Step 3 — Vectorization**
+TF-IDF transforms the cleaned text into a high-dimensional sparse feature vector, weighting words and phrases by their importance relative to the training corpus.
 
-Step 4: CLASSIFICATION
-  └─ Logistic Regression outputs P(Fake) and P(Real)
-     Confidence < 65% → flagged as "Uncertain"
+**Step 4 — Classification**
+Logistic Regression outputs `P(Fake)` and `P(Real)`. If neither probability exceeds the 65% confidence threshold, the result is flagged as Uncertain.
 
-Step 5: DISPLAY
-  └─ Verdict card + probability bar chart rendered in Streamlit
-```
+**Step 5 — Display**
+Streamlit renders the verdict card and a probability breakdown chart.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
-| Limitation | Details |
-|:-----------|:--------|
-| **Domain Bias** | Trained primarily on US political news; may underperform on tech, sports, or Indian news |
-| **Context Blindness** | Cannot understand satire, sarcasm, or cultural irony |
-| **Static Knowledge** | Model doesn't update with new events after training |
-| **Short Texts** | Social media posts < 20 words yield lower confidence |
+- Trained primarily on US political news — may underperform on Indian, tech, or sports content
+- Cannot detect sarcasm, satire, or culturally specific irony
+- Model knowledge is static; it does not update with new events after training
+- Very short texts (< 20 words) tend to produce lower-confidence results
 
 ---
 
-## 🚀 Roadmap
+## Roadmap
 
-- [ ] 🔥 **BERT / RoBERTa** — Transformer-based classification for contextual understanding
-- [ ] 🌐 **News API Integration** — Paste a URL, auto-fetch and analyze full articles
-- [ ] 🧠 **Explainable AI** — Highlight words that triggered the Fake/Real decision
-- [ ] 📊 **Analytics Dashboard** — Track and visualize detection history
-- [ ] 🌍 **Multilingual Support** — Expand beyond English
-- [ ] 🔁 **Active Learning** — Improve model from user feedback
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|:------|:-----------|
-| Language | Python 3.9+ |
-| ML Framework | Scikit-learn |
-| NLP | TF-IDF (sklearn) |
-| Data | Pandas, NumPy |
-| UI | Streamlit |
-| Serialization | Pickle |
+- [ ] Upgrade to BERT / RoBERTa for contextual understanding
+- [ ] URL input — auto-fetch and analyze full articles
+- [ ] Explainable AI — highlight the words driving each prediction
+- [ ] Real-time news API integration
+- [ ] Multilingual support
 
 ---
 
-## 🤝 Contributing
+## Tech Stack
 
-Contributions are welcome. Please follow the standard fork → branch → PR workflow.
-
-```bash
-git checkout -b feature/your-feature-name
-git commit -m "feat: add your feature"
-git push origin feature/your-feature-name
-```
-
-Open a pull request and describe what you changed and why.
+Python · Scikit-learn · Pandas · NumPy · Streamlit
 
 ---
 
-## 📄 License
+## Contributing
 
-This project is released under the **MIT License** — free for educational and personal use.
+Fork the repo, create a branch, make your changes, and open a pull request. All contributions are welcome.
 
 ---
 
-<div align="center">
+## License
 
-**Built by [Fidel M](https://github.com/aflumk2003)**
+MIT License — free for educational and personal use.
 
-*If this project helped you, consider giving it a ⭐*
+---
 
-</div>
+**Author:** [Fidel M](https://github.com/aflumk2003) · ⭐ Star this repo if it helped you
