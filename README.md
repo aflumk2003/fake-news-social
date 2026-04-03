@@ -228,4 +228,5 @@ MIT License — free for educational and personal use.
 
 ---
 
-**Author:** [Aflah](https://github.com/aflumk2003) · ⭐ Star this repo if it helped you
+**Author:** [ MUHAMMED AFLAH MK
+](https://github.com/aflumk2003) · ⭐ Star this repo if it helped you
